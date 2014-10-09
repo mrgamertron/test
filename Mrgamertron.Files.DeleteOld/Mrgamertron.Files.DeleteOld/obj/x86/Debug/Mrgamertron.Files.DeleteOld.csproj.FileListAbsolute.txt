@@ -1,0 +1,4 @@
+C:\Users\nick.arp\Desktop\Test.git\Mrgamertron.Files.DeleteOld\Mrgamertron.Files.DeleteOld\bin\Debug\Mrgamertron.Files.DeleteOld.exe
+C:\Users\nick.arp\Desktop\Test.git\Mrgamertron.Files.DeleteOld\Mrgamertron.Files.DeleteOld\bin\Debug\Mrgamertron.Files.DeleteOld.pdb
+C:\Users\nick.arp\Desktop\Test.git\Mrgamertron.Files.DeleteOld\Mrgamertron.Files.DeleteOld\obj\x86\Debug\Mrgamertron.Files.DeleteOld.exe
+C:\Users\nick.arp\Desktop\Test.git\Mrgamertron.Files.DeleteOld\Mrgamertron.Files.DeleteOld\obj\x86\Debug\Mrgamertron.Files.DeleteOld.pdb
