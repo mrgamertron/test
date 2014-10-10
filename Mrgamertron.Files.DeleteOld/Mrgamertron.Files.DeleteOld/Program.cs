@@ -10,48 +10,76 @@ namespace Mrgamertron.Files.DeleteOld
     {
         static void Main(string[] args)
         {
-            string path = @"C:\temp\nick";
-            string myTime = System.DateTime.Now.ToShortDateString();
+            Console.WriteLine("Number of command line parameters = {0}",
+             args.Length);
+            for (int i = 0; i < args.Length; i++)
+            {
+                Console.WriteLine("Arg[{0}] = [{1}]", i, args[i]);
+            }
             
-                         
+            //aufgabe 3
+            //aufruf über cmd mit
+            //C:\Users\nick.arp\Desktop\Test.git\Mrgamertron.Files.DeleteOld\Mrgamer.DeleteOld\bin\Debug>Mrgamertron.Files.DeleteOld.exe C:\temp\nick 30 /i=name
+            //legt automatisch ein task an, dass beim start läuft
+
             //alte dateien, die älter sind als eine woche löschen
             //rekursiv ordner durchgehen
             //leere ordner auch löschen
             //ausgeben der gelöschten dateien auf der konsole
-            Console.WriteLine(myTime);
-           DeleteOldFilesInsFolders(path);
+            try
+            {
+                int days = Convert.ToInt32(args[1]);
+                DeleteOldFilesInsFolders(args[0], days);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
             Console.ReadKey();
-
-
         }
 
-        public static void DeleteOldFilesInsFolders(string path)
+        public static void DeleteOldFilesInsFolders(string path, int days)
         {
-            if (System.IO.Directory.Exists(path))
+
+            if (Directory.Exists(path))
             {
-                Console.WriteLine("Exists");
+                Console.WriteLine("Checking: "+ path);
 
-                DirectoryInfo ParentDirectory = new System.IO.DirectoryInfo(path);
+                var parentDirectory = new DirectoryInfo(path);
 
-                foreach (System.IO.FileInfo f in ParentDirectory.GetFiles())
+                foreach (FileInfo f in parentDirectory.GetFiles())
                 {
-                    Console.WriteLine("File: " + f.Name);
+                    
 
-                    if (f.LastAccessTime < System.DateTime.Now.AddMinutes(-1))
+                    if (f.LastAccessTime < DateTime.Now.AddDays(-days))
                     {
+                        Console.WriteLine("Deleting file: " + f.Name);
                         f.Delete();
                     }
                 }
 
-                foreach (System.IO.DirectoryInfo d in ParentDirectory.GetDirectories())
+                foreach (DirectoryInfo d in parentDirectory.GetDirectories())
                 {
-                    Console.WriteLine("Folder: " + d.Name);
-                    DeleteOldFilesInsFolders(d.FullName);
+                    DeleteOldFilesInsFolders(d.FullName, days);
+                    if (Directory.GetFiles(d.FullName).Length < 1)
+                    {
+                        try
+                        {
+                            Console.WriteLine("Deleting folder:"+ d.FullName);
+                            Directory.Delete(d.FullName);
+                        }
+                        catch (IOException e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                    }
+
                 }
             }
             else
             {
-                Console.WriteLine("Does not Exist");
+                Console.WriteLine(path+ " does not exist");
             }
         }
 
